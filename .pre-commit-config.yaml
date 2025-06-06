@@ -16,3 +16,4 @@ repos:
       files: ".+\\.(yml|yaml)"
       verbose: true
       args: [-d, relaxed]
+
