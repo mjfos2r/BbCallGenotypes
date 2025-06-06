@@ -1,0 +1,5 @@
+version: 1.2
+workflows:
+- name: BbCallGenotypes
+  subclass: wdl
+  primaryDescriptorPath: /wdls/BbCallGenotypes.wdl
