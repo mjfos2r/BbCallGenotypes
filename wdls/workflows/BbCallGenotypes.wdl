@@ -1,9 +1,9 @@
 version 1.0
 # Michael J. Foster
 
-import "../ext/BbCallOspC/wdls/BbCallOspC.wdl" as OSPC
-import "../ext/BbCallPlasmids/wdls/BbCallPlasmids.wdl" as PC
-import "../ext/BbCallRST/wdls/BbCallRST.wdl" as RST
+import "https://github.com/mjfos2r/BbCallOspC/wdls/BbCallOspC.wdl" as OSPC
+import "https://github.com/mjfos2r/BbCallPlasmids/wdls/BbCallPlasmids.wdl" as PC
+import "https://github.com/mjfos2r/BbCallRST/wdls/BbCallRST.wdl" as RST
 
 workflow BbCallGenotypes {
 
