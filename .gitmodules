@@ -1,9 +1,9 @@
 [submodule "wdls/ext/BbCallRST"]
 	path = wdls/ext/BbCallRST
-	url = https://github.com/mjfos2r/BbCallRST.git
+	url = https://github.com/mjfos2r/BbCallRST
 [submodule "wdls/ext/BbCallOspC"]
 	path = wdls/ext/BbCallOspC
-	url = https://github.com/mjfos2r/BbCallOspC.git
+	url = https://github.com/mjfos2r/BbCallOspC
 [submodule "wdls/ext/BbCallPlasmids"]
 	path = wdls/ext/BbCallPlasmids
-	url = https://github.com/mjfos2r/BbCallPlasmids.git
+	url = https://github.com/mjfos2r/BbCallPlasmids
