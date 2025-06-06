@@ -59,5 +59,10 @@ workflow BbCallGenotypes {
         String RST_type = BbCallRST.RST_type
         File RST_amplicon = BbCallRST.RST_amplicon
         File RST_fragments = BbCallRST.RST_fragments
+
+        # tool versions
+        File BbCP_caller_version = BbCallPlasmids.BbCP_version
+        File ospC_caller_version = BbCallOspC.ospC_version
+        File RST_caller_version = BbCallRST.RST_version
     }
 }

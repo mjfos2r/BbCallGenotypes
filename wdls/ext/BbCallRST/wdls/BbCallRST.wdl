@@ -21,6 +21,7 @@ workflow BbCallRST {
         String RST_type = CallRST.RST_type
         File RST_amplicon = CallRST.RST_amplicon
         File RST_fragments = CallRST.RST_fragments
+        File RST_version = CallRST.version
     }
 }
 
@@ -38,6 +39,8 @@ task CallRST {
     Int disk_size = 50 + 10 * ceil(size(input_fa, "GB"))
 
     command <<<
+        rst_caller --version > rst_caller_version.txt
+
         rst_caller \
             -i "~{input_fa}" \
             -o "results"
@@ -51,6 +54,7 @@ task CallRST {
         String RST_type = read_string("results/~{sample_id}_RST_TYPE.txt")
         File RST_amplicon = "results/~{sample_id}_AMPLICON.fna"
         File RST_fragments = "results/~{sample_id}_FRAGMENT_LENGTHS.txt"
+        File version = "rst_caller_version.txt"
     }
     #########################
     RuntimeAttr default_attr = object {
