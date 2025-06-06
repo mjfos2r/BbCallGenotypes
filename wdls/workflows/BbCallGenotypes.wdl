@@ -8,6 +8,7 @@ import "../ext/BbCallRST/wdls/BbCallRST.wdl" as RST
 workflow BbCallGenotypes {
 
     meta {
+        author: "Michael J. Foster"
         description: "call RST, OspC, and Plasmids for a given input assembly"
     }
     parameter_meta {
@@ -36,7 +37,7 @@ workflow BbCallGenotypes {
             input_fa = BbCallPlasmids.BbCP_renamed_contigs
     }
     # using the renamed contigs, call RST
-    call RST_type.BbCallRST {
+    call RST.BbCallRST {
         input:
             sample_id = sample_id,
             input_fa = BbCallPlasmids.BbCP_renamed_contigs
