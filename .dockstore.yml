@@ -1,14 +1,18 @@
 version: 1.2
 workflows:
-- name: BbCallGenotypes
-  subclass: wdl
-  primaryDescriptorPath: /wdls/pipelines/BbCallGenotypes.wdl
-- name: BbCallOspC
-  subclass: wdl
-  primaryDescriptorPath: /wdls/workflows/BbCallOspC.wdl
-- name: BbCallPlasmids
-  subclass: wdl
-  primaryDescriptorPath: /wdls/workflows/BbCallPlasmids.wdl
-- name: BbCallRST
-  subclass: wdl
-  primaryDescriptorPath: /wdls/workflows/BbCallRST.wdl
+  - name: BbCallGenotypes
+    subclass: wdl
+    primaryDescriptorPath: /wdls/pipelines/BbCallGenotypes.wdl
+    latestTagAsDefault: 'true'
+  - name: BbCallOspC
+    subclass: wdl
+    primaryDescriptorPath: /wdls/workflows/BbCallOspC.wdl
+    latestTagAsDefault: 'true'
+  - name: BbCallPlasmids
+    subclass: wdl
+    primaryDescriptorPath: /wdls/workflows/BbCallPlasmids.wdl
+    latestTagAsDefault: 'true'
+  - name: BbCallRST
+    subclass: wdl
+    primaryDescriptorPath: /wdls/workflows/BbCallRST.wdl
+    latestTagAsDefault: 'true'
