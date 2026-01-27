@@ -1,22 +1,25 @@
 version 1.0
 import "../structs/Structs.wdl"
 
-workflow BbCallMLST {
+workflow CallMLST {
 
     meta {
         description: "Determine MLST via mlst_check from Sanger Pathogens."
     }
     parameter_meta {
         input_asm: "Input assembly to classify."
+        species: "Target genus for mlst classification"
     }
 
     input {
         File input_asm
+        String species = 'Borrelia'
     }
 
     call MLST_check {
         input:
             input_asm = input_asm,
+            species = species
     }
 
     output {
@@ -35,6 +38,7 @@ workflow BbCallMLST {
 task MLST_check {
     input {
         File input_asm
+        String species
         RuntimeAttr? runtime_attr_override
     }
     Int disk_size = 50 + 10 * ceil(size(input_asm, "GB"))
@@ -42,7 +46,7 @@ task MLST_check {
         NPROCS=$(cat /proc/cpuinfo | awk '/^processor/{print}' | wc -l)
         mkdir -p mlst_check_output
         get_sequence_type -v > mlst_check_version.txt
-        get_sequence_type -d "$NPROCS" -s 'Borrelia' -o mlst_check_output -c -y ~{input_asm}
+        get_sequence_type -d "$NPROCS" -s '~{species}' -o mlst_check_output -c -y ~{input_asm}
         tar -zcvf mlst_check_output.tar.gz mlst_check_output/
         tail -n +2 mlst_check_output/mlst_results.allele.tsv | cut -d'\t' -f2 > MLST_ST.txt
         tail -n +2 mlst_check_output/mlst_results.allele.tsv | cut -d'\t' -f3 > MLST_ST_NEW.txt

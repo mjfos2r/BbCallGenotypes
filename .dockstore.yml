@@ -16,3 +16,7 @@ workflows:
     subclass: wdl
     primaryDescriptorPath: /wdls/workflows/BbCallRST.wdl
     latestTagAsDefault: 'true'
+  - name: CallMLST
+    subclass: wdl
+    primaryDescriptorPath: /wdls/workflows/CallMLST.wdl
+    latestTagAsDefault: 'true'
