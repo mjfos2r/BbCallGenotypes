@@ -44,8 +44,8 @@ task MLST_check {
         get_sequence_type -v > mlst_check_version.txt
         get_sequence_type -d "$NPROCS" -s 'Borrelia' -o mlst_check_output -c -y ~{input_asm}
         tar -zcvf mlst_check_output.tar.gz mlst_check_output/
-        cut -d',' -f2 mlst_check_output/mlst_results.allele.csv > MLST_ST.txt
-        cut -d',' -f3 mlst_check_output/mlst_results.allele.csv > MLST_ST_NEW.txt
+        tail -n +2 mlst_check_output/mlst_results.allele.tsv | cut -d'\t' -f2 > MLST_ST.txt
+        tail -n +2 mlst_check_output/mlst_results.allele.tsv | cut -d'\t' -f3 > MLST_ST_NEW.txt
     >>>
 
     output {
