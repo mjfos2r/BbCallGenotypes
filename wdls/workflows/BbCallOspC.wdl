@@ -37,7 +37,9 @@ task CallOspC {
         sample_id: "sample_id for the assembly we're classifying"
         input_fa: "draft assembly.fasta to be classified"
     }
+
     Int disk_size = 50 + 10 * ceil(size(input_fa, "GB"))
+
     command <<<
         ospc_caller --version > ospc_caller_version.txt
 
@@ -45,7 +47,7 @@ task CallOspC {
             -i "~{input_fa}" \
             -o "results" \
             -t 8
-        mv results/*.fasta results/"~{sample_id}_renamed.fasta"
+        #mv results/*.fna results/"~{sample_id}_ospC.fna" # what was I doing with this originally?
         tar -C results -czvf results/ospC_hits_xml.tar.gz ospC_v5/
     >>>
 
@@ -56,6 +58,8 @@ task CallOspC {
         File ospC_raw_hits_xml = "results/ospC_hits_xml.tar.gz"
         String ospC_type = read_string("results/ospC_type.txt")
         File version = "ospc_caller_version.txt"
+        #File ospC_seq_fna = "results/ospC_seq.fna"
+        #File ospC_seq_faa = "results/ospC_seq.faa"
     }
     #########################
     RuntimeAttr default_attr = object {

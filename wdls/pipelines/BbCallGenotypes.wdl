@@ -36,23 +36,23 @@ workflow BbCallGenotypes {
     call OSPC.BbCallOspC {
         input:
             sample_id = sample_id,
-            input_fa = BbCallPlasmids.BbCP_renamed_contigs
+            input_fa = input_contigs#BbCallPlasmids.BbCP_renamed_contigs
     }
     # using the renamed contigs, call RST
     call RST.BbCallRST {
         input:
             sample_id = sample_id,
-            input_fa = BbCallPlasmids.BbCP_renamed_contigs
+            input_fa = input_contigs#BbCallPlasmids.BbCP_renamed_contigs
     }
     call MLST.CallMLST {
         input:
-            input_asm = BbCallPlasmids.BbCP_renamed_contigs,
+            input_asm = input_contigs,#BbCallPlasmids.BbCP_renamed_contigs,
             species = species
     }
 
     output {
         # Plasmid Calls
-        File gt_BbCP_renamed_contigs = BbCallPlasmids.BbCP_renamed_contigs
+        #File gt_BbCP_renamed_contigs = BbCallPlasmids.BbCP_renamed_contigs
         File gt_BbCP_pf32_hits = BbCallPlasmids.BbCP_pf32_hits
         File gt_BbCP_wp_hits = BbCallPlasmids.BbCP_wp_hits
         File gt_BbCP_best_hits_json = BbCallPlasmids.BbCP_best_hits_json

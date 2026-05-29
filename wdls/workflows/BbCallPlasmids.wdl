@@ -17,7 +17,7 @@ workflow BbCallPlasmids {
             input_fa = input_fa
     }
     output {
-        File BbCP_renamed_contigs = CallPlasmids.renamed_contigs
+        #File BbCP_renamed_contigs = CallPlasmids.renamed_contigs
         File BbCP_pf32_hits = CallPlasmids.pf32_hits
         File BbCP_wp_hits = CallPlasmids.wp_hits
         File BbCP_best_hits_json = CallPlasmids.best_hits_json
@@ -45,13 +45,14 @@ task CallPlasmids {
             -i "~{input_fa}" \
             -o "results" \
             -t 8
-        seqkit sort -l results/*.fasta >results/"~{sample_id}_renamed.fasta"
+        #echo "sorting output fasta by length"
+        #seqkit sort -l results/*.fasta >results/"~{sample_id}_renamed.fasta"
         tar -C results -czvf results/pf32_hits.tar.gz pf32
         tar -C results -czvf results/wp_hits.tar.gz wp
     >>>
 
     output {
-        File renamed_contigs = "results/~{sample_id}_renamed.fasta"
+        #File renamed_contigs = "results/~{sample_id}_renamed.fasta"
         File pf32_hits = "results/pf32_hits.tar.gz"
         File wp_hits = "results/wp_hits.tar.gz"
         File best_hits_json = "results/summary_best_hits.json"
