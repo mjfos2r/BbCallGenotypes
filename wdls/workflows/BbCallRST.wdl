@@ -45,15 +45,15 @@ task CallRST {
             -i "~{input_fa}" \
             -o "results"
 
-        mv results/*_AMPLICON.fna results/~{sample_id}_AMPLICON.fna
-        mv results/*_RST_TYPE.txt results/~{sample_id}_RST_TYPE.txt
-        mv results/*_FRAGMENT_LENGTHS.txt results/~{sample_id}_FRAGMENT_LENGTHS.txt
+        mv results/*_AMPLICON.fna ~{sample_id}_AMPLICON.fna
+        mv results/*_RST_TYPE.txt ~{sample_id}_RST_TYPE.txt
+        mv results/*_FRAGMENT_LENGTHS.txt ~{sample_id}_FRAGMENT_LENGTHS.txt
 
     >>>
     output {
-        String RST_type = read_string("results/~{sample_id}_RST_TYPE.txt")
-        File RST_amplicon = "results/~{sample_id}_AMPLICON.fna"
-        File RST_fragments = "results/~{sample_id}_FRAGMENT_LENGTHS.txt"
+        String RST_type = read_string("~{sample_id}_RST_TYPE.txt")
+        File RST_amplicon = "~{sample_id}_AMPLICON.fna"
+        File RST_fragments = "~{sample_id}_FRAGMENT_LENGTHS.txt"
         File version = "rst_caller_version.txt"
     }
     #########################
