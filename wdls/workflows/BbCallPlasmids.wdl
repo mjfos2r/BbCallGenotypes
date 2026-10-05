@@ -55,6 +55,7 @@ task CallPlasmids {
         #seqkit sort -l results/*.fasta >results/"~{sample_id}_renamed.fasta"
         tar -C results -czvf results/pf32_hits.tar.gz pf32
         tar -C results -czvf results/wp_hits.tar.gz wp
+        ls results
     >>>
 
     output {
@@ -74,7 +75,7 @@ task CallPlasmids {
         boot_disk_gb:       25,
         preemptible_tries:  0,
         max_retries:        0,
-        docker:             "mjfos2r/plasmid_caller:latest"
+        docker:             "mjfos2r/plasmid_caller:7.1.2"
     }
     RuntimeAttr runtime_attr = select_first([runtime_attr_override, default_attr])
     runtime {

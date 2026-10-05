@@ -59,7 +59,6 @@ workflow BbCallGenotypes {
         File gt_BbCP_best_hits_tsv = BbCallPlasmids.BbCP_best_hits_tsv
         File gt_BbCP_genospecies_composition = BbCallPlasmids.BbCP_genospecies_composition
         String BbCP_top_genospecies = BbCallPlasmids.BbCP_top_genospecies
-        # to do: add top genospecies parsing for table view as string.
         # OspC Calls
         File gt_ospC_all_hits_tsv = BbCallOspC.ospC_all_hits_tsv
         File gt_ospC_best_hits_tsv = BbCallOspC.ospC_best_hits_tsv
