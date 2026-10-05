@@ -16,6 +16,10 @@ workflow BbCallPlasmids {
             sample_id = sample_id,
             input_fa = input_fa
     }
+    call ExtractGenospecies {
+        input:
+            composition_tsv = CallPlasmids.genospecies_composition
+    }
     output {
         #File BbCP_renamed_contigs = CallPlasmids.renamed_contigs
         File BbCP_pf32_hits = CallPlasmids.pf32_hits
@@ -23,6 +27,8 @@ workflow BbCallPlasmids {
         File BbCP_best_hits_json = CallPlasmids.best_hits_json
         File BbCP_best_hits_tsv = CallPlasmids.best_hits_tsv
         File BbCP_version = CallPlasmids.version
+        File BbCP_genospecies_composition = CallPlasmids.genospecies_composition
+        String BbCP_top_genospecies = ExtractGenospecies.top_genospecies
     }
 }
 
@@ -58,6 +64,7 @@ task CallPlasmids {
         File best_hits_json = "results/summary_best_hits.json"
         File best_hits_tsv = "results/summary_best_hits.tsv"
         File version = "plasmid_caller_version.txt"
+        File genospecies_composition = "results/genospecies_composition.tsv"
     }
     #########################
     RuntimeAttr default_attr = object {
@@ -78,5 +85,36 @@ task CallPlasmids {
         preemptible:            select_first([runtime_attr.preemptible_tries, default_attr.preemptible_tries])
         maxRetries:             select_first([runtime_attr.max_retries,       default_attr.max_retries])
         docker:                 select_first([runtime_attr.docker,            default_attr.docker])
+    }
+}
+
+task ExtractGenospecies {
+    input {
+        File composition_tsv
+    }
+
+    command <<<
+        awk -F '\t' '
+            NR == 1 {
+                for (i = 1; i <= NF; i++) col[$i] = i
+                next
+            }
+            NF {
+                pct = $(col["percent_composition"]) + 0
+                if (!found || pct > best) {
+                    best = pct
+                    taxon = $(col["genospecies"])
+                    found = 1
+                }
+            }
+            END {
+                if (!found) exit 1
+                print taxon
+            }
+        ' "~{composition_tsv}" > top_genospecies.txt
+    >>>
+
+    output {
+        String top_genospecies = read_string("top_genospecies.txt")
     }
 }
