@@ -92,6 +92,7 @@ task CallPlasmids {
 task ExtractGenospecies {
     input {
         File composition_tsv
+        RuntimeAttr? runtime_attr_override
     }
 
     command <<<
@@ -117,5 +118,25 @@ task ExtractGenospecies {
 
     output {
         String top_genospecies = read_string("top_genospecies.txt")
+    }
+    #########################
+    RuntimeAttr default_attr = object {
+        cpu_cores:          2,
+        mem_gb:             4,
+        disk_gb:            50,
+        boot_disk_gb:       25,
+        preemptible_tries:  0,
+        max_retries:        0,
+        docker:             "mjfos2r/plasmid_caller:latest"
+    }
+    RuntimeAttr runtime_attr = select_first([runtime_attr_override, default_attr])
+    runtime {
+        cpu:                    select_first([runtime_attr.cpu_cores,         default_attr.cpu_cores])
+        memory:                 select_first([runtime_attr.mem_gb,            default_attr.mem_gb]) + " GiB"
+        disks: "local-disk " +  select_first([runtime_attr.disk_gb,           default_attr.disk_gb]) + " HDD"
+        bootDiskSizeGb:         select_first([runtime_attr.boot_disk_gb,      default_attr.boot_disk_gb])
+        preemptible:            select_first([runtime_attr.preemptible_tries, default_attr.preemptible_tries])
+        maxRetries:             select_first([runtime_attr.max_retries,       default_attr.max_retries])
+        docker:                 select_first([runtime_attr.docker,            default_attr.docker])
     }
 }
